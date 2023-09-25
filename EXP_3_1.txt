@@ -1,0 +1,552 @@
+s5c24@CC1-30:~$ mysql -u s5c24 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE Library;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE Library;
+Database changed
+mysql> DROP DATABASE Library;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE DATABASE Library;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE Library;
+Database changed
+mysql> CREATE TABLE Book(
+    -> Book_id INT NOT NULL,
+    -> Title VARCHAR(50),
+    -> Language_id INT,
+    -> MRP BIGINT,
+    -> Publisher_id INT,
+    -> Publisher_date DATE,
+    -> Volume INT,
+    -> Status VARCHAR(20),
+    -> PRIMARY KEY(Book_id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 11
+mysql> CREATE TABLE Language(
+    -> Lang_int INT NOT NULL,
+    -> name VARCHAR(20));
+Query OK, 0 rows affected (0.44 sec)
+
+mysql> CREATE TABLE Publisher(
+    -> Publisher_id INT,
+    -> Name VARCHAR(20),
+    -> Address VARCHAR(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> CREATE TABLE Publisher( Publisher_id INT, Name VARCHAR(20), Address VARCHAR(50),
+    -> PRIMARY KEY(Publisher_id));
+Query OK, 0 rows affected (0.25 sec)
+
+mysql> DESCRIBE Language;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Lang_int | int(11)     | NO   |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.06 sec)
+
+mysql> DROP TABLE Language;
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> CREATE TABLE Languages( Lang_int INT NOT NULL, name VARCHAR(20),
+    -> PRIMARY KEY(Lang_int));
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> DESCRIBE Language;
+ERROR 1146 (42S02): Table 'Library.Language' doesn't exist
+mysql> DESCRIBE Languages;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Lang_int | int(11)     | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE Publisher;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Publisher_id | int(11)     | NO   | PRI | NULL    |       |
+| Name         | varchar(20) | YES  |     | NULL    |       |
+| Address      | varchar(50) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Book( Book_id INT NOT NULL, Title VARCHAR(50), Language_id INT, MRP BIGINT, Publisher_id INT, Publisher_date DATE, Volume INT, Status VARCHAR(20), PRIMARY KEY(Book_id), 
+    ->  FOREIGN KEY(Language_id) REFERENCES Languages(Lang_int^C
+mysql> DESCRIBE Book;
+ERROR 1146 (42S02): Table 'Library.Book' doesn't exist
+mysql> DROP TABLE Languages;
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> CREATE TABLE Language( Lang_id INT NOT NULL, name VARCHAR(20), PRIMARY KEY(Lang_int));
+ERROR 1072 (42000): Key column 'Lang_int' doesn't exist in table
+mysql> CREATE TABLE Language( Lang_id INT NOT NULL, name VARCHAR(20), PRIMARY KEY(Lang_id));
+Query OK, 0 rows affected (0.25 sec)
+
+mysql> CREATE TABLE Book( Book_id INT NOT NULL, Title VARCHAR(50), Language_id INT, MRP BIGINT, Publisher_id INT, Publisher_date DATE, Volume INT, Status VARCHAR(20), PRIMARY KEY(Book_id),
+    -> FOREIGN KEY(Language_id) REFERENCES Language(Lang_id),
+    -> FOREIGN KEY(Publisher_id) REFERENCES Publisher(Publisher_id));
+Query OK, 0 rows affected (0.32 sec)
+
+mysql> DESCRIBE Book;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Book_id        | int(11)     | NO   | PRI | NULL    |       |
+| Title          | varchar(50) | YES  |     | NULL    |       |
+| Language_id    | int(11)     | YES  | MUL | NULL    |       |
+| MRP            | bigint(20)  | YES  |     | NULL    |       |
+| Publisher_id   | int(11)     | YES  | MUL | NULL    |       |
+| Publisher_date | date        | YES  |     | NULL    |       |
+| Volume         | int(11)     | YES  |     | NULL    |       |
+| Status         | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Book
+    -> CHANGE COLUMN Publisher_date Published_date DATE;
+Query OK, 0 rows affected (0.63 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Book;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Book_id        | int(11)     | NO   | PRI | NULL    |       |
+| Title          | varchar(50) | YES  |     | NULL    |       |
+| Language_id    | int(11)     | YES  | MUL | NULL    |       |
+| MRP            | bigint(20)  | YES  |     | NULL    |       |
+| Publisher_id   | int(11)     | YES  | MUL | NULL    |       |
+| Published_date | date        | YES  |     | NULL    |       |
+| Volume         | int(11)     | YES  |     | NULL    |       |
+| Status         | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+8 rows in set (0.02 sec)
+
+mysql> CREATE TABLE Auther(
+    -> Auther_id INT,
+    -> Name VARCHAR(20),
+    -> Email VARCHAR(20),
+    -> Ph_no INT,
+    -> Status VARCHAR(20),
+    -> PRIMARY KEY(Auther_id));
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> DESCRIBE 
+    -> Auther;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Auther_id | int(11)     | NO   | PRI | NULL    |       |
+| Name      | varchar(20) | YES  |     | NULL    |       |
+| Email     | varchar(20) | YES  |     | NULL    |       |
+| Ph_no     | int(11)     | YES  |     | NULL    |       |
+| Status    | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE  Auther
+    -> Book;
+Empty set (0.01 sec)
+
+mysql> DESCRIBE  Auther^C
+mysql> CREATE TABLE Book_auther(
+    -> Book_id INT,
+    -> Auther_id INT,
+    -> PRIMARY KEY(Book_id,Auther_id),
+    -> FORIEGN KEY(Book_id) REFERENCES Book(Book_id),
+    -> FORIEGN KEY(Auther_id) REFERENCES Auther(Auther_id),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'KEY(Book_id) REFERENCES Book(Book_id),
+FORIEGN KEY(Auther_id) REFERENCES Auther(' at line 5
+mysql> CREATE TABLE Book_auther( Book_id INT, Auther_id INT, PRIMARY KEY(Book_id,Auther_id), FORIEGN KEY(Book_id) REFERENCES Book(Book_id), FORIEGN KEY(Auther_id) REFERENCES Auther(Auther_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'KEY(Book_id) REFERENCES Book(Book_id), FORIEGN KEY(Auther_id) REFERENCES Auther(' at line 1
+mysql> CREATE TABLE Book_auther( Book_id INT, Auther_id INT, PRIMARY KEY(Book_id,Auther_id), FOREIGN KEY(Book_id) REFERENCES Book(Book_id), FOREIGN KEY(Auther_id) REFERENCES Auther(Auther_id));
+Query OK, 0 rows affected (0.76 sec)
+
+mysql> DESCRIBE Book_auther
+    -> ^C
+mysql> DESCRIBE Book_auther;
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| Book_id   | int(11) | NO   | PRI | NULL    |       |
+| Auther_id | int(11) | NO   | PRI | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+2 rows in set (0.08 sec)
+
+mysql> CREATE TABEL Member(
+    -> Member_id INT,
+    -> Name VARCHAR(20),
+    -> Email VARCHAR(20),
+    -> ^C
+mysql> CREATE TABEL Member(
+    -> Member_id INT,
+    -> Name VARCHAR(20),
+    -> Branch_code INT,
+    -> Email VARCHAR(20),
+    -> Roll_no INT,
+    -> Date_of_join DATE,
+    -> Status VARCHAR(20),
+    -> PRIMARY KEY(Member_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABEL Member(
+Member_id INT,
+Name VARCHAR(20),
+Branch_code INT,
+Email VARCHAR(20' at line 1
+mysql> CREATE TABLE Member( Member_id INT, Name VARCHAR(20), Branch_code INT, Email VARCHAR(20), Roll_no INT, Date_of_join DATE, Status VARCHAR(20), PRIMARY KEY(Member_id));
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> DESCRIBE Member
+    -> ^C
+mysql> DESCRIBE Member;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Member_id    | int(11)     | NO   | PRI | NULL    |       |
+| Name         | varchar(20) | YES  |     | NULL    |       |
+| Branch_code  | int(11)     | YES  |     | NULL    |       |
+| Email        | varchar(20) | YES  |     | NULL    |       |
+| Roll_no      | int(11)     | YES  |     | NULL    |       |
+| Date_of_join | date        | YES  |     | NULL    |       |
+| Status       | varchar(20) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.10 sec)
+
+mysql> CREATE TABLE Book_view(
+    -> Issue_id INT,
+    -> Actual_date DATE,
+    -> Return DATE,
+    -> late_day int,
+    -> late_fee INT,
+    -> ^C
+mysql> CREATE TABLE Book_view(
+    -> Issue_id INT,
+    -> Date_of_issue DATE,
+    -> 
+    -> Book_id INT,
+    -> Member_id INT,
+    -> Expected_return DATE,
+    -> Return DATE,
+    -> PRIMARY KEY(issue_id),
+    -> FOREIGN KEY(Book_id) REFERENCES Book(Book_id),
+    -> FOREIGN KEY(Member_id) REFERENCES Member(Member_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Return DATE,
+PRIMARY KEY(issue_id),
+FOREIGN KEY(Book_id) REFERENCES Book(Book_id' at line 8
+mysql> CREATE TABLE Book_view( Issue_id INT, Date_of_issue DATE,  Book_id INT, Member_id INT, Expected_return DATE, return DATE, PRIMARY KEY(issue_id), FOREIGN
+KEY(Book_id) REFERENCES Book(Book_id), FOREIGN KEY(Member_id) REFERENCES Member(Member_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'return DATE, PRIMARY KEY(issue_id), FOREIGN KEY(Book_id) REFERENCES Book(Book_id' at line 1
+mysql> CREATE TABLE Book_view( Issue_id INT, Date_of_issue DATE,  Book_id INT, Member_id INT, Expected_return DATE, Return_date DATE, PRIMARY KEY(issue_id), FOR
+EIGN KEY(Book_id) REFERENCES Book(Book_id), FOREIGN KEY(Member_id) REFERENCES Member(Member_id));
+Query OK, 0 rows affected (0.36 sec)
+
+mysql> DESCRIBE Book_view;
++-----------------+---------+------+-----+---------+-------+
+| Field           | Type    | Null | Key | Default | Extra |
++-----------------+---------+------+-----+---------+-------+
+| Issue_id        | int(11) | NO   | PRI | NULL    |       |
+| Date_of_issue   | date    | YES  |     | NULL    |       |
+| Book_id         | int(11) | YES  | MUL | NULL    |       |
+| Member_id       | int(11) | YES  | MUL | NULL    |       |
+| Expected_return | date    | YES  |     | NULL    |       |
+| Return_date     | date    | YES  |     | NULL    |       |
++-----------------+---------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> DROP Book_view;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Book_view' at line 1
+mysql> DROP TABLE Book_view;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> CREATE TABLE Book_issue( Issue_id INT, Date_of_issue DATE,  Book_id INT,
+Member_id INT, Expected_date_of_return DATE, PRIMARY KEY(issue_id), FOREIGN KEY(Book_id) REFERENCES Book(Book_id), FOREIGN KEY(Member_id) REFERENCES Member(Member_id));
+Query OK, 0 rows affected (0.64 sec)
+
+mysql> DESCRIBE Book_issue;
++-------------------------+---------+------+-----+---------+-------+
+| Field                   | Type    | Null | Key | Default | Extra |
++-------------------------+---------+------+-----+---------+-------+
+| Issue_id                | int(11) | NO   | PRI | NULL    |       |
+| Date_of_issue           | date    | YES  |     | NULL    |       |
+| Book_id                 | int(11) | YES  | MUL | NULL    |       |
+| Member_id               | int(11) | YES  | MUL | NULL    |       |
+| Expected_date_of_return | date    | YES  |     | NULL    |       |
++-------------------------+---------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE Book_return(
+    -> issue_id INT,
+    -> Actual_date DATE,
+    -> Return_date^C
+mysql> CREATE Book_return(
+    -> issue_id INT,
+    -> Actual_date_of_return DATE,
+    -> Late_day INT,
+    -> Late_fee INT,
+    -> FOREIGN KEY(issue_id) REFERENCES Book_issue(issue_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Book_return(
+issue_id INT,
+Actual_date_of_return DATE,
+Late_day INT,
+Late_fee IN' at line 1
+mysql> CREATE TABLE Book_return( issue_id INT, Actual_date_of_return DATE, Late_
+day INT, Late_fee INT, FOREIGN KEY(issue_id) REFERENCES Book_issue(issue_id));
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> DESCRIBE Book_return;
++-----------------------+---------+------+-----+---------+-------+
+| Field                 | Type    | Null | Key | Default | Extra |
++-----------------------+---------+------+-----+---------+-------+
+| issue_id              | int(11) | YES  | MUL | NULL    |       |
+| Actual_date_of_return | date    | YES  |     | NULL    |       |
+| Late_day              | int(11) | YES  |     | NULL    |       |
+| Late_fee              | int(11) | YES  |     | NULL    |       |
++-----------------------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Book_return
+    -> CHANGE COLUMN issue_id Issue_id INT;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Book_return;
++-----------------------+---------+------+-----+---------+-------+
+| Field                 | Type    | Null | Key | Default | Extra |
++-----------------------+---------+------+-----+---------+-------+
+| Issue_id              | int(11) | YES  | MUL | NULL    |       |
+| Actual_date_of_return | date    | YES  |     | NULL    |       |
+| Late_day              | int(11) | YES  |     | NULL    |       |
+| Late_fee              | int(11) | YES  |     | NULL    |       |
++-----------------------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Late_fee_rule(
+    -> From_days INT,
+    -> To_days INT,
+    -> Amount INT,
+    -> PRIMARY KEY(From_days, To_days, Amount));
+Query OK, 0 rows affected (0.36 sec)
+
+mysql> DESCRIBE Late_fee_rule;
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| From_days | int(11) | NO   | PRI | NULL    |       |
+| To_days   | int(11) | NO   | PRI | NULL    |       |
+| Amount    | int(11) | NO   | PRI | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> DESCRIBE 
+    -> ^C
+mysql> DESCRIBE Book;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Book_id        | int(11)     | NO   | PRI | NULL    |       |
+| Title          | varchar(50) | YES  |     | NULL    |       |
+| Language_id    | int(11)     | YES  | MUL | NULL    |       |
+| MRP            | bigint(20)  | YES  |     | NULL    |       |
+| Publisher_id   | int(11)     | YES  | MUL | NULL    |       |
+| Published_date | date        | YES  |     | NULL    |       |
+| Volume         | int(11)     | YES  |     | NULL    |       |
+| Status         | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_Library |
++-------------------+
+| Auther            |
+| Book              |
+| Book_auther       |
+| Book_issue        |
+| Book_return       |
+| Language          |
+| Late_fee_rule     |
+| Member            |
+| Publisher         |
++-------------------+
+9 rows in set (0.42 sec)
+
+mysql> ALTER TABLE Auther Author;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Author' at line 1
+mysql> ALTER TABLE Auther RENAME Author;
+Query OK, 0 rows affected (0.55 sec)
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_Library |
++-------------------+
+| Author            |
+| Book              |
+| Book_auther       |
+| Book_issue        |
+| Book_return       |
+| Language          |
+| Late_fee_rule     |
+| Member            |
+| Publisher         |
++-------------------+
+9 rows in set (0.02 sec)
+
+mysql> DROP TABLE Book_return;
+Query OK, 0 rows affected (0.25 sec)
+
+mysql> CREATE TABLE Book_return( Issue_id INT, Actual_date_of_return DATE, Late_day INT, Late_fee INT, FOREIGN KEY(issue_id) REFERENCES Book_issue(issue_id));
+Query OK, 0 rows affected (0.60 sec)
+
+mysql> DROP TABLE Language;
+ERROR 1217 (23000): Cannot delete or update a parent row: a foreign key constraint fails
+mysql> DROP TABLE Late_fee_Rule;
+ERROR 1051 (42S02): Unknown table 'Library.Late_fee_Rule'
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> DROP TABLE Language;
+ERROR 1217 (23000): Cannot delete or update a parent row: a foreign key constraint fails
+mysql> DROP TABLE Late_fee_rule;
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> CREATE TABLE Late_fee_rule( From_days INT, To_days INT, Amount INT, PRIMARY KEY(From_days, To_days, Amount));
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> ALTER TABLE Author MODIFY Ph_no VARCHAR(20);
+Query OK, 0 rows affected (1.32 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_Library |
++-------------------+
+| Author            |
+| Book              |
+| Book_auther       |
+| Book_issue        |
+| Book_return       |
+| Language          |
+| Late_fee_rule     |
+| Member            |
+| Publisher         |
++-------------------+
+9 rows in set (0.09 sec)
+
+mysql> DESCRIBE Author
+    -> ^C
+mysql> DESCRIBE Author;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Auther_id | int(11)     | NO   | PRI | NULL    |       |
+| Name      | varchar(20) | YES  |     | NULL    |       |
+| Email     | varchar(20) | YES  |     | NULL    |       |
+| Ph_no     | varchar(20) | YES  |     | NULL    |       |
+| Status    | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.09 sec)
+
+mysql> 
+mysql> 
+mysql> ALTER TABLE Author MODIFY Ph_no INT;
+Query OK, 0 rows affected (0.65 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> ALTER TABLE Author MODIFY Ph_no VARCHAR(20);
+Query OK, 0 rows affected (0.64 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Late_fee_rule VALUES(1,6,10);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> INSERT INTO Late_fee_rule VALUES(7,30,100);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> SELECT * FROM Late_fee_rule;
++-----------+---------+--------+
+| From_days | To_days | Amount |
++-----------+---------+--------+
+|         1 |       6 |     10 |
+|         7 |      30 |    100 |
++-----------+---------+--------+
+2 rows in set (0.03 sec)
+
+mysql> ALTER TABLE Late_fee_rule MODIFY Amount DROP;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP' at line 1
+mysql> ALTER TABLE Late_fee_rule DROP COLUMN Amount;
+Query OK, 0 rows affected (0.79 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Late_fee_rule ADD COLUMN Amount INT(5);
+Query OK, 0 rows affected (0.76 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Late_fee_rule;
++-----------+---------+--------+
+| From_days | To_days | Amount |
++-----------+---------+--------+
+|         1 |       6 |   NULL |
+|         7 |      30 |   NULL |
++-----------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> create user 'test'@localhost identified by "pwd";
+ERROR 1396 (HY000): Operation CREATE USER failed for 'test'@'localhost'
+mysql> CREATE USER 'test' IDENTIFIED BY 'pwd';
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> ^C
+mysql> ^C
+mysql> exit
+Bye
+s5c24@CC1-30:~$ mysql -u user -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'user'@'localhost' (using password: YES)
+s5c24@CC1-30:~$ mysql -u s5c24 -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE USER 'test'@'localhost' IDENTIFIED BY 'pwd';
+ERROR 1396 (HY000): Operation CREATE USER failed for 'test'@'localhost'
+mysql> SELECT user FROM mysql;
+ERROR 1046 (3D000): No database selected
+mysql> ^C
+mysql> 
