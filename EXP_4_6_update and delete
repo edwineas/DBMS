@@ -1,0 +1,26 @@
+//update with primary key
+mysql> UPDATE Author
+    -> SET name = 'Manu Menon', email = 'manu.menon@dbms.com'
+    -> WHERE Author_id = 1;
+  mysql> SELECT * FROM Author;
++-----------+-------------+----------------------+------------+----------+
+| Auther_id | Name        | Email                | Ph_no      | Status   |
++-----------+-------------+----------------------+------------+----------+
+|         1 | Manu Menon  | manu.menon@dbms.com  | 701234567  | Active   |
+|         2 | Vishnu Nair | vishnu.nair@dbms.com | 808654321  | Active   |
+|         3 | Rajesh Nair | rajesh.nair@dbms.com | 9876543210 | Active   |
+|         4 | Sneha Nair  | sneha.nair@dbms.com  | 9876543211 | Inactive |
+|         5 | Kiran Kumar | kiran.kumar@dbms.com | 9876543212 | Active   |
++-----------+-------------+----------------------+------------+----------+
+5 rows in set (0.03 sec)
+
+//delete with primary key
+mysql> DELETE FROM Book
+    -> WHERE Book_id = 1;
+Query OK, 1 row affected (0.43 sec)
+
+UPDATE Book
+SET
+  Publisher_id = 99999,
+  Title = 'New Title'
+WHERE Book_id = 1;
