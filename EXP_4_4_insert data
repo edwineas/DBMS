@@ -143,3 +143,22 @@ mysql> SELECT * FROM Member;
 5 rows in set (0.00 sec)
 
 
+mysql> INSERT INTO Publisher (Publisher_id, Name, Address) VALUES
+    -> (1, 'ABC Publications', 'Kochi, Kerala'),
+    -> (2, 'XYZ Books', 'Thiruvananthapuram, Kerala'),
+    -> (3, 'PQR Press', 'Kozhikode, Kerala'),
+    -> (4, 'LMN Publishers', 'Alappuzha, Kerala'),
+    -> (5, 'JKL Printers', 'Malappuram, Kerala');
+Query OK, 5 rows affected (0.51 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Publisher;
++--------------+------------------+----------------------------+
+| Publisher_id | Name             | Address                    |
++--------------+------------------+----------------------------+
+|            1 | ABC Publications | Kochi, Kerala              |
+|            2 | XYZ Books        | Thiruvananthapuram, Kerala |
+|            3 | PQR Press        | Kozhikode, Kerala          |
+|            4 | LMN Publishers   | Alappuzha, Kerala          |
+|            5 | JKL Printers     | Malappuram, Kerala         |
++--------------+------------------+----------------------------+
+5 rows in set (0.01 sec)
