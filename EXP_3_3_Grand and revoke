@@ -1,0 +1,58 @@
+cec@CC1-30:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE library
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> GRANT SELECT ON late_fee_rule TO 'news5c24'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> REVOKE SELECT ON late_fee_rule FROM 'news5c24'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> ^C
+mysql> 
+
+
+ cec@CC1-30:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE library
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> GRANT SELECT ON late_fee_rule TO 'news5c24'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> REVOKE SELECT ON late_fee_rule FROM 'news5c24'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> ^C
+mysql> 
+
+
