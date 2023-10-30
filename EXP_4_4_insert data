@@ -1,0 +1,11 @@
+mysql> INSERT INTO Author VALUES (01,'Kavya Menon','kavya.menon@dbms.com',701234567,'Active'), (02,'Vishnu Nair','vishnu.nair@dbms.com',808654321,'Active');
+Query OK, 2 rows affected (0.10 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Author;
++-----------+-------------+----------------------+-----------+--------+
+| Auther_id | Name        | Email                | Ph_no     | Status |
++-----------+-------------+----------------------+-----------+--------+
+|         1 | Kavya Menon | kavya.menon@dbms.com | 701234567 | Active |
+|         2 | Vishnu Nair | vishnu.nair@dbms.com | 808654321 | Active |
++-----------+-------------+----------------------+-----------+--------+
+2 rows in set (0.00 sec)
