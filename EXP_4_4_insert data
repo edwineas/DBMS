@@ -1,11 +1,145 @@
-mysql> INSERT INTO Author VALUES (01,'Kavya Menon','kavya.menon@dbms.com',701234567,'Active'), (02,'Vishnu Nair','vishnu.nair@dbms.com',808654321,'Active');
-Query OK, 2 rows affected (0.10 sec)
-Records: 2  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO Author VALUES 
+    -> (01,'Kavya Menon','kavya.menon@dbms.com',701234567,'Active'), 
+    -> (02,'Vishnu Nair','vishnu.nair@dbms.com',808654321,'Active'),
+    -> (03, 'Rajesh Nair', 'rajesh.nair@dbms.com', 9876543210, 'Active'),
+    -> (04, 'Sneha Nair', 'sneha.nair@dbms.com', 9876543211, 'Inactive'),
+    -> (05, 'Kiran Kumar', 'kiran.kumar@dbms.com', 9876543212, 'Active');
+Query OK, 5 rows affected (0.10 sec)
+Records: 5  Duplicates: 0  Warnings: 0
 mysql> SELECT * FROM Author;
-+-----------+-------------+----------------------+-----------+--------+
-| Auther_id | Name        | Email                | Ph_no     | Status |
-+-----------+-------------+----------------------+-----------+--------+
-|         1 | Kavya Menon | kavya.menon@dbms.com | 701234567 | Active |
-|         2 | Vishnu Nair | vishnu.nair@dbms.com | 808654321 | Active |
-+-----------+-------------+----------------------+-----------+--------+
-2 rows in set (0.00 sec)
++-----------+-------------+----------------------+------------+----------+
+| Auther_id | Name        | Email                | Ph_no      | Status   |
++-----------+-------------+----------------------+------------+----------+
+|         1 | Kavya Menon | kavya.menon@dbms.com | 701234567  | Active   |
+|         2 | Vishnu Nair | vishnu.nair@dbms.com | 808654321  | Active   |
+|         3 | Rajesh Nair | rajesh.nair@dbms.com | 9876543210 | Active   |
+|         4 | Sneha Nair  | sneha.nair@dbms.com  | 9876543211 | Inactive |
+|         5 | Kiran Kumar | kiran.kumar@dbms.com | 9876543212 | Active   |
++-----------+-------------+----------------------+------------+----------+
+5 rows in set (0.00 sec)
+
+
+mysql> INSERT INTO Book VALUES
+    -> (1,'Human',1,350,1,'2023-10-15',1,'Available'),
+    -> (2,'Guest',2,250,2,'2023-09-20',2,'Out of Stock'),
+    -> (3, 'The Art of Programming', 1, 420, 3, '2023-11-05', 1, 'Available'),
+    -> (4, 'The History of Kerala', 2, 300, 4, '2023-10-25', 2, 'In Stock');
+Query OK, 4 rows affected (0.21 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Book;
++---------+------------------------+-------------+------+--------------+----------------+--------+--------------+
+| Book_id | Title                  | Language_id | MRP  | Publisher_id | Published_date | Volume | Status       |
++---------+------------------------+-------------+------+--------------+----------------+--------+--------------+
+|       1 | Human                  |           1 |  350 |            1 | 2023-10-15     |      1 | Available    |
+|       2 | Guest                  |           2 |  250 |            2 | 2023-09-20     |      2 | Out of Stock |
+|       3 | The Art of Programming |           1 |  420 |            3 | 2023-11-05     |      1 | Available    |
+|       4 | The History of Kerala  |           2 |  300 |            4 | 2023-10-25     |      2 | In Stock     |
++---------+------------------------+-------------+------+--------------+----------------+--------+--------------+
+4 rows in set (0.00 sec)
+
+
+mysql> INSERT INTO Book_auther VALUES
+    -> (1,1),
+    -> (1,2),
+    -> (2,3),
+    -> (3,4),
+    -> (4,5);
+Query OK, 5 rows affected (0.17 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Book_auther;
++---------+-----------+
+| Book_id | Auther_id |
++---------+-----------+
+|       1 |         1 |
+|       1 |         2 |
+|       2 |         3 |
+|       3 |         4 |
+|       4 |         5 |
++---------+-----------+
+5 rows in set (0.01 sec)
+
+
+mysql> INSERT INTO Book_issue VALUES
+    -> (1,'2023-10-15',1,1,'2023-11-15'),
+    -> (2,'2023-10-20',2,2,'2023-11-20'),
+    -> (3,'2023-10-25',3,3,'2023-11-25'),
+    -> (4,'2023-10-30',4,4,'2023-11-30'),
+    -> (5,'2023-11-05',5,5,'2023-12-05');
+Query OK, 5 rows affected (0.15 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Book_issue;
++----------+---------------+---------+-----------+-------------------------+
+| Issue_id | Date_of_issue | Book_id | Member_id | Expected_date_of_return |
++----------+---------------+---------+-----------+-------------------------+
+|        1 | 2023-10-15    |       1 |         1 | 2023-11-15              |
+|        2 | 2023-10-20    |       2 |         2 | 2023-11-20              |
+|        3 | 2023-10-25    |       3 |         3 | 2023-11-25              |
+|        4 | 2023-10-30    |       4 |         4 | 2023-11-30              |
+|        5 | 2023-11-05    |       5 |         5 | 2023-12-05              |
++----------+---------------+---------+-----------+-------------------------+
+5 rows in set (0.00 sec)
+
+
+mysql> INSERT INTO Book_return VALUES
+    -> (1,'2023-11-10',25,250),
+    -> (2,'2023-11-15',25,250),
+    -> (3,'2023-11-20',25,250),
+    -> (4,'2023-11-25',25,250),
+    -> (5,'2023-11-30',25,250);
+Query OK, 5 rows affected (0.15 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Book_return;
++----------+-----------------------+----------+----------+
+| Issue_id | Actual_date_of_return | Late_day | Late_fee |
++----------+-----------------------+----------+----------+
+|        1 | 2023-11-10            |       25 |      250 |
+|        2 | 2023-11-15            |       25 |      250 |
+|        3 | 2023-11-20            |       25 |      250 |
+|        4 | 2023-11-25            |       25 |      250 |
+|        5 | 2023-11-30            |       25 |      250 |
++----------+-----------------------+----------+----------+
+5 rows in set (0.00 sec)
+
+
+mysql>  INSERT INTO Language VALUES
+    -> (1,'English'),
+    -> (2,'Malayalam'),
+    -> (3,'Hindi'),
+    -> (4,'Tamil'),
+    -> (5,'Kannada');
+Query OK, 5 rows affected (0.12 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Language;
++---------+-----------+
+| Lang_id | name      |
++---------+-----------+
+|       1 | English   |
+|       2 | Malayalam |
+|       3 | Hindi     |
+|       4 | Tamil     |
+|       5 | Kannada   |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+
+mysql> INSERT INTO Member (Member_id, Name, Branch_code, Email, Roll_no, Date_of_join, Status) VALUES
+    -> (1, 'John Doe', 101, 'john.doe@dbms.com', 1001, '2023-01-15', 'Active'),
+    -> (2, 'Jane Smith', 102, 'jane.smith@dbms.com', 1002, '2023-02-20', 'Active'),
+    -> (3, 'Alice Johnson', 103, 'alice.j@dbms.com', 1003, '2023-03-25', 'Inactive'),
+    -> (4, 'Bob Brown', 101, 'bob.b@dbms.com', 1004, '2023-04-30', 'Active'),
+    -> (5, 'Ella Davis', 102, 'ella.d@dbms.com', 1005, '2023-05-05', 'Inactive');
+Query OK, 5 rows affected (0.14 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Member;
++-----------+---------------+-------------+---------------------+---------+--------------+----------+
+| Member_id | Name          | Branch_code | Email               | Roll_no | Date_of_join | Status   |
++-----------+---------------+-------------+---------------------+---------+--------------+----------+
+|         1 | John Doe      |         101 | john.doe@dbms.com   |    1001 | 2023-01-15   | Active   |
+|         2 | Jane Smith    |         102 | jane.smith@dbms.com |    1002 | 2023-02-20   | Active   |
+|         3 | Alice Johnson |         103 | alice.j@dbms.com    |    1003 | 2023-03-25   | Inactive |
+|         4 | Bob Brown     |         101 | bob.b@dbms.com      |    1004 | 2023-04-30   | Active   |
+|         5 | Ella Davis    |         102 | ella.d@dbms.com     |    1005 | 2023-05-05   | Inactive |
++-----------+---------------+-------------+---------------------+---------+--------------+----------+
+5 rows in set (0.00 sec)
+
+
