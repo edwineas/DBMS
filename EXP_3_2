@@ -1,0 +1,38 @@
+mysql> CREATE INDEX index_name ON book_issue(member_id, book_id);
+Query OK, 0 rows affected, 1 warning (0.59 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> DESCRIBE book_issue;
++-------------------------+---------+------+-----+---------+-------+
+| Field                   | Type    | Null | Key | Default | Extra |
++-------------------------+---------+------+-----+---------+-------+
+| issue_id                | int(11) | NO   | PRI | NULL    |       |
+| date_of_issue           | date    | YES  |     | NULL    |       |
+| book_id                 | int(11) | YES  | MUL | NULL    |       |
+| member_id               | int(11) | YES  | MUL | NULL    |       |
+| expected_date_of_return | date    | YES  |     | NULL    |       |
++-------------------------+---------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM book_issue;
++----------+---------------+---------+-----------+-------------------------+
+| issue_id | date_of_issue | book_id | member_id | expected_date_of_return |
++----------+---------------+---------+-----------+-------------------------+
+|      100 | 2023-09-20    |      11 |       111 | 2023-09-27              |
+|      200 | 2023-09-28    |      12 |       211 | 2023-10-09              |
++----------+---------------+---------+-----------+-------------------------+
+2 rows in set (0.03 sec)
+
+mysql> SHOW INDEX FROM book_issue;
++------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table      | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| book_issue |          0 | PRIMARY    |            1 | issue_id    | A         |           2 |     NULL | NULL   |      | BTREE      |         |               |
+| book_issue |          1 | book_id    |            1 | book_id     | A         |           2 |     NULL | NULL   | YES  | BTREE      |         |               |
+| book_issue |          1 | book_index |            1 | member_id   | A         |           2 |     NULL | NULL   | YES  | BTREE      |         |               |
+| book_issue |          1 | book_index |            2 | book_id     | A         |           2 |     NULL | NULL   | YES  | BTREE      |         |               |
+| book_issue |          1 | index_name |            1 | member_id   | A         |           2 |     NULL | NULL   | YES  | BTREE      |         |               |
+| book_issue |          1 | index_name |            2 | book_id     | A         |           2 |     NULL | NULL   | YES  | BTREE      |         |               |
++------------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+6 rows in set (0.00 sec)
+
