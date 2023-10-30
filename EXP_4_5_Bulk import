@@ -1,0 +1,5 @@
+mysql> LOAD DATA LOCAL INFILE '/home/s5c24/Downloads/MOCK_DATA.csv'
+    -> INTO TABLE Book
+    -> FIELDS TERMINATED BY ','
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES;
