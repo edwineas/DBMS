@@ -1,0 +1,21 @@
+mysql> SELECT a.Author_id, a.Name
+    -> FROM Book_author ba
+    -> JOIN Author a ON ba.Author_id = a.Author_id
+    -> WHERE ba.Book_id IN (
+    ->     SELECT Book_id
+    ->     FROM Book_author
+    ->     GROUP BY Book_id
+    ->     HAVING COUNT(Author_id) > 1
+    -> )
+    -> GROUP BY a.Author_id, a.Name;
++-----------+-------------+
+| Author_id | Name        |
++-----------+-------------+
+|         1 | Manu Menon  |
+|         2 | Vishnu Nair |
+|         4 | Sneha Nair  |
+|         5 | Kiran Kumar |
++-----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> 
