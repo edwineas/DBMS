@@ -1,0 +1,21 @@
+mysql> SELECT SUM(Late_fee) AS Total_Fine_Collected_Current_Month
+    -> FROM Book_return
+    -> WHERE MONTH(Actual_date_of_return) = MONTH(NOW())
+    ->   AND YEAR(Actual_date_of_return) = YEAR(NOW());
++------------------------------------+
+| Total_Fine_Collected_Current_Month |
++------------------------------------+
+|                                110 |
++------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(Late_fee) AS Total_Fine_Collected_Current_Quarter
+    -> FROM Book_return
+    -> WHERE QUARTER(Actual_date_of_return) = QUARTER(NOW())
+    ->   AND YEAR(Actual_date_of_return) = YEAR(NOW());
++--------------------------------------+
+| Total_Fine_Collected_Current_Quarter |
++--------------------------------------+
+|                                  560 |
++--------------------------------------+
+1 row in set (0.00 sec)
