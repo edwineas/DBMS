@@ -1,0 +1,119 @@
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_Library |
++-------------------+
+| Author            |
+| Book              |
+| Book_author       |
+| Book_issue        |
+| Book_return       |
+| Language          |
+| Late_fee_rule     |
+| Member            |
+| Publisher         |
++-------------------+
+9 rows in set (0.00 sec)
+
+mysql> DESCRIBE Author;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Author_id | int(11)     | NO   | PRI | NULL    |       |
+| Name      | varchar(20) | YES  |     | NULL    |       |
+| Email     | varchar(20) | YES  |     | NULL    |       |
+| Ph_no     | varchar(20) | YES  |     | NULL    |       |
+| Status    | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.23 sec)
+
+mysql> DESCRIBE Book;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Book_id        | int(11)     | NO   | PRI | NULL    |       |
+| Title          | varchar(50) | YES  |     | NULL    |       |
+| Language_id    | int(11)     | YES  | MUL | NULL    |       |
+| MRP            | bigint(20)  | YES  |     | NULL    |       |
+| Publisher_id   | int(11)     | YES  | MUL | NULL    |       |
+| Published_date | date        | YES  |     | NULL    |       |
+| Volume         | int(11)     | YES  |     | NULL    |       |
+| Status         | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> DESCRIBE Book_author;
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| Book_id   | int(11) | NO   | PRI | NULL    |       |
+| Author_id | int(11) | NO   | PRI | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE Book_issue;
++-------------------------+---------+------+-----+---------+-------+
+| Field                   | Type    | Null | Key | Default | Extra |
++-------------------------+---------+------+-----+---------+-------+
+| Issue_id                | int(11) | NO   | PRI | NULL    |       |
+| Date_of_issue           | date    | YES  |     | NULL    |       |
+| Book_id                 | int(11) | YES  | MUL | NULL    |       |
+| Member_id               | int(11) | YES  | MUL | NULL    |       |
+| Expected_date_of_return | date    | YES  |     | NULL    |       |
++-------------------------+---------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE Book_return;
++-----------------------+---------+------+-----+---------+-------+
+| Field                 | Type    | Null | Key | Default | Extra |
++-----------------------+---------+------+-----+---------+-------+
+| Issue_id              | int(11) | YES  | MUL | NULL    |       |
+| Actual_date_of_return | date    | YES  |     | NULL    |       |
+| Late_day              | int(11) | YES  |     | NULL    |       |
+| Late_fee              | int(11) | YES  |     | NULL    |       |
++-----------------------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE Language;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Lang_id | int(11)     | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE Late_fee_rule;
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| From_days | int(11) | NO   | PRI | NULL    |       |
+| To_days   | int(11) | NO   | PRI | NULL    |       |
+| Amount    | int(5)  | YES  |     | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE Member;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Member_id    | int(11)     | NO   | PRI | NULL    |       |
+| Name         | varchar(20) | YES  |     | NULL    |       |
+| Branch_code  | int(11)     | YES  |     | NULL    |       |
+| Email        | varchar(20) | YES  |     | NULL    |       |
+| Roll_no      | int(11)     | YES  |     | NULL    |       |
+| Date_of_join | date        | YES  |     | NULL    |       |
+| Status       | varchar(20) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> DESCRIBE Publisher;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Publisher_id | int(11)     | NO   | PRI | NULL    |       |
+| Name         | varchar(20) | YES  |     | NULL    |       |
+| Address      | varchar(50) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>  
