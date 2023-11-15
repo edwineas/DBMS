@@ -1,1 +1,13 @@
-e
+mysql> SELECT p.Publisher_id, p.Name, COUNT(b.Book_id) AS Book_Count
+    -> FROM Publisher p JOIN Book b ON p.Publisher_id = b.Publisher_id
+    -> GROUP BY b.Publisher_id;
++--------------+------------------+------------+
+| Publisher_id | Name             | Book_Count |
++--------------+------------------+------------+
+|            1 | ABC Publications |        203 |
+|            2 | XYZ Books        |        188 |
+|            3 | New Press        |        198 |
+|            4 | LMN Publishers   |        209 |
+|            5 | JKL Printers     |        201 |
++--------------+------------------+------------+
+5 rows in set (0.01 sec)
