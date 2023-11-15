@@ -1,0 +1,14 @@
+mysql> SELECT bi.Book_id, b.title, bi.Member_id, bi.Date_of_issue, bi.Expected_date_of_return
+    -> FROM Book_issue bi
+    -> JOIN Book b ON bi.Book_id = b.Book_id
+    -> LEFT JOIN Book_return br ON bi.Issue_id = br.Issue_id
+    -> WHERE br.Issue_id IS NULL;
++---------+-------+-----------+---------------+-------------------------+
+| Book_id | title | Member_id | Date_of_issue | Expected_date_of_return |
++---------+-------+-----------+---------------+-------------------------+
+|       6 | Mr    |         1 | 2023-11-04    | 2023-11-24              |
+|       7 | Dr    |         2 | 2023-11-14    | 2023-12-04              |
+|       8 | Ms    |         3 | 2023-11-24    | 2023-12-14              |
++---------+-------+-----------+---------------+-------------------------+
+3 rows in set (0.00 sec)
+
