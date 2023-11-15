@@ -1,0 +1,19 @@
+mysql> SELECT m.Member_id, m.Name
+    -> FROM Member m
+    -> JOIN Book_issue bi ON m.Member_id = bi.Member_id
+    -> JOIN Book b ON bi.Book_id = b.Book_id
+    -> WHERE b.language_id = 2
+    -> AND m.Member_id NOT IN (
+    -> SELECT m2.Member_id
+    -> FROM Member m2
+    -> JOIN Book_issue bi2 ON m2.Member_id = bi2.Member_id
+    -> JOIN Book b2 ON bi2.Book_id = b2.Book_id
+    -> WHERE b2.Language_id != 2);
++-----------+---------------+
+| Member_id | Name          |
++-----------+---------------+
+|         4 | Bob Brown     |
+|         6 | Gokul Krishna |
+|         7 | Akash V V K   |
++-----------+---------------+
+3 rows in set (0.19 sec)
