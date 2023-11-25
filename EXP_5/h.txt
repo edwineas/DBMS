@@ -1,0 +1,10 @@
+mysql> SELECT SUM(y.fine) AS Total_fine FROM( SELECT CASE WHEN x.days<1 THEN 0 W
+HEN x.days<7 THEN 10 WHEN x.days<30 THEN 100 WHEN x.days<101 THEN x.days*10 END
+AS Fine FROM( SELECT DATEDIFF(CURRENT_DATE,Expected_date_of_return) AS days FROM
+ Book
++------------+
+| Total_fine |
++------------+
+|        210 |
++------------+
+1 row in set (0.00 sec)
