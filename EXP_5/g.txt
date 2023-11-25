@@ -1,0 +1,14 @@
+mysql> SELECT m.Member_id, m.Name
+    -> FROM Member m
+    -> JOIN (SELECT Member_id FROM Book_issue WHERE Issue_id NOT IN( SELECT Member_id FROM Book_return)) bm
+    -> ON m.Member_id = bm.Member_id;
++-----------+---------------+
+| Member_id | Name          |
++-----------+---------------+
+|         1 | John Doe      |
+|         2 | Jane Smith    |
+|         3 | Alice Johnson |
+|         6 | Gokul Krishna |
+|         7 | Akash V V K   |
++-----------+---------------+
+5 rows in set (0.20 sec)
