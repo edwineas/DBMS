@@ -1,0 +1,8 @@
+mysql> SELECT Member_id, Name FROM Member WHERE Member_id NOT IN( SELECT Member_id  FROM Book_issue) AND MONTH(Date_of_join) > 1;
++-----------+-------------+
+| Member_id | Name        |
++-----------+-------------+
+|         8 | Jerishab M  |
+|         9 | Gokul J Dev |
++-----------+-------------+
+2 rows in set (0.00 sec)
